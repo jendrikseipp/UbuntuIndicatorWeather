@@ -47,6 +47,16 @@ def get_local_icon_name(code):
         return ICON_NAMES[day_code]
 
 
+def get_location():
+    url = 'http://ipinfo.io/json/'
+    u = urllib.urlopen(url)
+    data = u.read()
+    info = json.loads(data)
+    loc = info['loc']
+    lat, lon = loc.strip().split(",")
+    return (lat, lon)
+
+
 class GetWeather:
     def __init__(self):
         self.ind = appindicator.Indicator(
@@ -79,7 +89,7 @@ class GetWeather:
         sys.exit(0)
 
     def get_weather(self, widget=None):
-        lat, lon = self.get_location()
+        lat, lon = get_location()
         url = (
             'http://weatherwebservicecall.herokuapp.com/'
             'current?lat={}&lon={}'.format(lat, lon))
@@ -96,15 +106,6 @@ class GetWeather:
         self.ind.set_label(label)
         self.ind.set_icon(icon_name)
         return True
-
-    def get_location(self):
-        url = 'http://ipinfo.io/json/'
-        u = urllib.urlopen(url)
-        data = u.read()
-        info = json.loads(data)
-        loc = info['loc']
-        lat, lon = loc.strip().split(",")
-        return (lat, lon)
 
 
 if __name__ == "__main__":
