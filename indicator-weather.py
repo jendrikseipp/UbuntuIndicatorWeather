@@ -37,13 +37,16 @@ class GetWeather:
 
     def menu_setup(self):
         self.menu = gtk.Menu()
+
+        self.update_item = gtk.MenuItem("Update")
+        self.update_item.connect("activate", self.get_weather)
+        self.update_item.show()
+        self.menu.append(self.update_item)
+
         self.quit_item = gtk.MenuItem("Quit")
         self.quit_item.connect("activate", self.quit)
         self.quit_item.show()
         self.menu.append(self.quit_item)
-        self.temp_item = gtk.MenuItem("")
-        self.temp_item.show()
-        self.menu.append(self.temp_item)
 
     def main(self):
         self.get_weather()
@@ -53,7 +56,7 @@ class GetWeather:
     def quit(self, widget):
         sys.exit(0)
 
-    def get_weather(self):
+    def get_weather(self, widget=None):
         lat, lon = self.get_location()
         url = (
             'http://weatherwebservicecall.herokuapp.com/'
@@ -69,7 +72,6 @@ class GetWeather:
         label = u'{temp}° {city}'.format(**locals())
         self.ind.set_label(label)
         self.ind.set_icon(icon_name)
-        self.temp_item.get_child().set_text(label)
         return True
 
     def get_icon_name_local(self, icon_name):
