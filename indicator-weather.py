@@ -24,6 +24,28 @@ import gtk
 
 PING_FREQUENCY_IN_MINUTES = 10
 
+ICON_NAMES = {
+    "01d": "weather-clear",
+    "01n": "weather-clear-night",
+    "02d": "weather-few-clouds",
+    "02n": "weather-few-clouds-night",
+    "03d": "ubuntuone-client-idle",
+    "04d": "weather-overcast",
+    "09d": "weather-showers",
+    "10d": "weather-showers-scattered",
+    "11d": "weather-storm",
+    "13d": "weather-snow",
+    "50d": "weather-fog",
+}
+
+
+def get_local_icon_name(code):
+    if code in ICON_NAMES:
+        return ICON_NAMES[code]
+    else:
+        day_code = code[:2] + 'd'
+        return ICON_NAMES[day_code]
+
 
 class GetWeather:
     def __init__(self):
@@ -67,37 +89,13 @@ class GetWeather:
         temp = j['temperature']
         temp = int(float(temp))
         location = j['geoLocation']
-        icon_name = j['iconName']
-        icon_name = self.get_icon_name_local(icon_name)
+        code = j['iconName']
+        icon_name = get_local_icon_name(code)
         city = location.strip().rsplit(",")[-1]
         label = u'{temp}° {city}'.format(**locals())
         self.ind.set_label(label)
         self.ind.set_icon(icon_name)
         return True
-
-    def get_icon_name_local(self, icon_name):
-        if icon_name == "01d":
-            return "weather-clear"
-        elif icon_name == "01n":
-            return "weather-clear-night"
-        elif icon_name == "02d":
-            return "weather-few-clouds"
-        elif icon_name == "02n":
-            return "weather-few-clouds-night"
-        elif icon_name in ("03d", "03n"):
-            return "ubuntuone-client-idle"
-        elif icon_name in ("04d", "04n"):
-            return "weather-overcast"
-        elif icon_name in ("09d", "09n"):
-            return "weather-showers"
-        elif icon_name in ("10d", "10n"):
-            return "weather-showers-scattered"
-        elif icon_name in ("11d", "11n"):
-            return "weather-storm"
-        elif icon_name in ("13d", "13n"):
-            return "weather-snow"
-        elif icon_name in ("50d", "50n"):
-            return "weather-fog"
 
     def get_location(self):
         url = 'http://ipinfo.io/json/'
