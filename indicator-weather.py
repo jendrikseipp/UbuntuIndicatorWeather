@@ -49,7 +49,7 @@ class GetWeather:
         self.menu.append(self.quit_item)
 
     def main(self):
-        self.get_weather()
+        gtk.idle_add(self.get_weather)
         gtk.timeout_add(PING_FREQUENCY_IN_MINUTES * 60000, self.get_weather)
         gtk.main()
 
