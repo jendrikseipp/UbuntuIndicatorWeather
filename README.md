@@ -1,19 +1,19 @@
 # UbuntuIndicatorWeather
 ## Description
-UbuntuIndicatorWeather is a very simple weather indicator for Ubuntu unity and Gnome 3. It is developed with Python and uses two web service calls [IpInfo.io](http://ipinfo.io/), [Open Weather Map](http://api.openweathermap.org/) to detect user's location and temperature respectively. 
+UbuntuIndicatorWeather is a very simple weather indicator for Ubuntu
+unity and Gnome 3. It is developed with Python and uses two web service
+calls [IpInfo.io](http://ipinfo.io/), [Open Weather
+Map](http://api.openweathermap.org/) to detect user's location and
+temperature respectively.
 
 ## Dependencies
-The indicator has dependencies for Python >= 2.7 and requires some Python libraries which are listed below
-* Python >= 2.7
+* Python 2.7 (Python 3 is not supported)
 * Python gtk library
 * Python appindicator library
-* Python urllib
-* Python json library
 
 ## How to use
-You can either user .deb package under pkg folder if you are using Ubuntu or Debian based distributions or .tar.gz one for other distributions. 
-
-Source code is in src folder which contains debian package structure and startup script
+Calling `./weather-indicator.py` will start the applet. Pass `--help`
+for the list of options.
 
 ## Screenshot
 <p align="center">
@@ -23,7 +23,7 @@ Source code is in src folder which contains debian package structure and startup
 ## Contact
 * kasra@madadipouya.com
 * kasra_mp@live.com
-	
+
 ## License
 Indicator Weather is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License version 3
@@ -37,4 +37,3 @@ GNU General Public License for more details.  <http://www.gnu.org/licenses/>
 Author(s):
 
 © 2015 Kasra Madadipouya <kasra@madadipouya.com>
-
