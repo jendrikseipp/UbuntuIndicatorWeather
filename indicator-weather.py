@@ -14,6 +14,7 @@
 # Author(s):
 # (C) 2015 Kasra Madadipouya <kasra@madadipouya.com>
 
+import argparse
 import json
 import sys
 import urllib
@@ -57,8 +58,18 @@ def get_location():
     return (lat, lon)
 
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--location",
+        help="comma-separated latitude and longitude")
+    return parser.parse_args()
+
+
 class GetWeather:
-    def __init__(self):
+    def __init__(self, location=None):
+        self.location = location
+
         self.ind = appindicator.Indicator(
             "weather-indicator",
             "weather-clear",
@@ -89,7 +100,7 @@ class GetWeather:
         sys.exit(0)
 
     def get_weather(self, widget=None):
-        lat, lon = get_location()
+        lat, lon = self.location or get_location()
         url = (
             'http://weatherwebservicecall.herokuapp.com/'
             'current?lat={}&lon={}'.format(lat, lon))
@@ -109,5 +120,9 @@ class GetWeather:
 
 
 if __name__ == "__main__":
-    indicator = GetWeather()
+    args = parse_args()
+    location = None
+    if args.location:
+        location = args.location.strip().split(",")
+    indicator = GetWeather(location=location)
     indicator.main()
