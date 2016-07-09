@@ -65,6 +65,7 @@ class GetWeather:
         data = u.read()
         j = json.loads(data)
         temp = j['temperature']
+        temp = int(float(temp))
         location = j['geoLocation']
         icon_name = j['iconName']
         icon_name = self.get_icon_name_local(icon_name)
